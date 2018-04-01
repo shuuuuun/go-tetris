@@ -6,12 +6,12 @@ import (
   "time"
 )
 
-var number_of_block int = 4
-var cols int = 12
-var rows int = 12
-var block_size int = 35
-var hidden_rows int = number_of_block
-var logical_rows int = rows + hidden_rows
+const number_of_block int = 4
+const cols int = 12
+const rows int = 12
+const block_size int = 35
+const hidden_rows int = number_of_block
+const logical_rows int = rows + hidden_rows
 
 type Tetris struct {
   currentBlock Block

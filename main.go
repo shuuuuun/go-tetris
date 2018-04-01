@@ -42,16 +42,15 @@ func pollEvent() {
 func draw() {
   termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
-  drawBox(0, 0)
-  drawBox(2, 1)
+  drawBorder()
 
   termbox.Flush()
 }
 
-func drawBox(x, y int) {
+func drawBorder() {
   const color = termbox.ColorDefault
-  termbox.SetCell(x, y, '┏', color, color)
-  termbox.SetCell(x+1, y, '┓', color, color)
-  termbox.SetCell(x, y+1, '┗', color, color)
-  termbox.SetCell(x+1, y+1, '┛', color, color)
+  termbox.SetCell(0, 0, '┏', color, color)
+  termbox.SetCell(cols, 0, '┓', color, color)
+  termbox.SetCell(0, rows, '┗', color, color)
+  termbox.SetCell(cols, rows, '┛', color, color)
 }
