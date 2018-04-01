@@ -12,22 +12,14 @@ var block_size int = 35
 var hidden_rows int = number_of_block
 var logical_rows int = rows + hidden_rows
 
-// var board [][]int
-var board [cols][rows]int
-// var board [][]int = [][]int{
-//   { 0, 0, 0, 0, 0 },
-//   { 0, 0, 0, 0, 0 },
-//   { 0, 0, 0, 0, 0 },
-//   { 0, 0, 0, 0, 0 },
-//   { 0, 0, 0, 0, 0 },
-// }
+var board [][]int
 
 type Tetris struct {
 }
 
 func main() {
   tm.Clear() // Clear current screen
-  // initBoard()
+  initBoard()
   for {
     render()
   }
@@ -46,17 +38,13 @@ func render() {
   time.Sleep(time.Second)
 }
 
-// func initBoard() {
-//   // board = []
-//   for r := 0; r < rows; r++ {
-//     // board[r] = []
-//     board = append(board, []int)
-//     for c := 0; c < cols; c++ {
-//       // board[r][c] = 0
-//       board[r] = append(board[r], 0)
-//     }
-//   }
-// }
+func initBoard() {
+  board = make([][]int, logical_rows)
+  for r := 0; r < logical_rows; r++ {
+    board[r] = make([]int, cols)
+  }
+  // tm.Println(board)
+}
 
 func drawBoard() {
   for r := 0; r < rows; r++ {
@@ -66,7 +54,8 @@ func drawBoard() {
       if board[boardY][boardX] != 0 {
         continue
       }
-      // drawBox(win, x, y)
+      // drawBox()
+      // tm.Print(" ")
     }
   }
 }
