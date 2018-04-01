@@ -21,7 +21,7 @@ type Tetris struct {
 func (tetris *Tetris) newGame() {
   tetris.initBoard()
   // currentBlock = new(Block)
-  tetris.currentBlock = Block{x: 0, y: 0}
+  tetris.currentBlock = Block{x: 1, y: 5}
 }
 
 func (tetris *Tetris) update() {
@@ -82,8 +82,10 @@ func (tetris *Tetris) drawBorder() {
       } else {
         // tm.Print(" ")
         // tm.Print("■")
-        // currentBlock.x
-        if tetris.board[r][c] == 0 {
+        is_block := tetris.currentBlock.x == c && tetris.currentBlock.y == r
+        // tm.Print(c)
+        // tm.Print(is_block)
+        if tetris.board[r][c] == 0 && !is_block {
           tm.Print(" ")
         } else {
           tm.Print("■")
