@@ -18,6 +18,12 @@ type Tetris struct {
   board [][]int
 }
 
+func (tetris *Tetris) newGame() {
+  tetris.initBoard()
+  // currentBlock = new(Block)
+  tetris.currentBlock = Block{x: 0, y: 0}
+}
+
 func (tetris *Tetris) update() {
   tetris.currentBlock.moveDown()
 }
