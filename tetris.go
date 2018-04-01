@@ -11,18 +11,38 @@ var rows int = 12
 var block_size int = 35
 var hidden_rows int = number_of_block
 var logical_rows int = rows + hidden_rows
+var currentBlock Block
+// var currentBlock *Block
 
 var board [][]int
 
 type Tetris struct {
 }
 
+type Block struct {
+  shape [][]int
+  block_id int
+  x int
+  y int
+}
+
+func (b Block) moveDown() {
+  b.y += 1
+}
+
 func main() {
   tm.Clear() // Clear current screen
   initBoard()
+  // currentBlock = new(Block)
+  currentBlock = Block{x: 0, y: 0}
   for {
+    update()
     render()
   }
+}
+
+func update() {
+  currentBlock.moveDown()
 }
 
 func render() {
@@ -32,7 +52,7 @@ func render() {
 
   tm.Println("Current Time:", time.Now().Format(time.RFC1123))
   drawBorder()
-  drawBoard()
+  // drawBoard()
 
   tm.Flush() // Call it every time at the end of rendering
   time.Sleep(time.Second)
@@ -77,7 +97,14 @@ func drawBorder() {
       } else if c == 0 || (c == cols - 1) {
         tm.Print("|")
       } else {
-        tm.Print(" ")
+        // tm.Print(" ")
+        // tm.Print("■")
+        // currentBlock.x
+        if board[r][c] == 0 {
+          tm.Print(" ")
+        } else {
+          tm.Print("■")
+        }
       }
     }
     tm.Println("")
