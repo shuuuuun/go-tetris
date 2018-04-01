@@ -1,8 +1,17 @@
 package main
 
-import "fmt"
+import (
+  tm "github.com/buger/goterm"
+)
 
 func main() {
-  // print("\033[H\033[2J")
-  fmt.Println("Hello world!")
+  tetris := Tetris{}
+  tm.Clear() // Clear current screen
+  tetris.initBoard()
+  // currentBlock = new(Block)
+  currentBlock = Block{x: 0, y: 0}
+  for {
+    tetris.update()
+    tetris.render()
+  }
 }
