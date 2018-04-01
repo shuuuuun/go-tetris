@@ -9,7 +9,7 @@ func main() {
   tm.Clear() // Clear current screen
   tetris.initBoard()
   // currentBlock = new(Block)
-  currentBlock = Block{x: 0, y: 0}
+  tetris.currentBlock = Block{x: 0, y: 0}
   for {
     tetris.update()
     tetris.render()

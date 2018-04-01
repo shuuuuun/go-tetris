@@ -11,16 +11,15 @@ var rows int = 12
 var block_size int = 35
 var hidden_rows int = number_of_block
 var logical_rows int = rows + hidden_rows
-var currentBlock Block
-// var currentBlock *Block
-
-var board [][]int
 
 type Tetris struct {
+  currentBlock Block
+  // currentBlock *Block
+  board [][]int
 }
 
 func (tetris *Tetris) update() {
-  currentBlock.moveDown()
+  tetris.currentBlock.moveDown()
 }
 
 func (tetris *Tetris) render() {
@@ -37,11 +36,11 @@ func (tetris *Tetris) render() {
 }
 
 func (tetris *Tetris) initBoard() {
-  board = make([][]int, logical_rows)
+  tetris.board = make([][]int, logical_rows)
   for r := 0; r < logical_rows; r++ {
-    board[r] = make([]int, cols)
+    tetris.board[r] = make([]int, cols)
   }
-  // tm.Println(board)
+  // tm.Println(tetris.board)
 }
 
 func (tetris *Tetris) drawBoard() {
@@ -49,7 +48,7 @@ func (tetris *Tetris) drawBoard() {
     for c := 0; c < cols; c++ {
       boardX := c
       boardY := r + hidden_rows
-      if board[boardY][boardX] != 0 {
+      if tetris.board[boardY][boardX] != 0 {
         continue
       }
       // drawBox()
@@ -78,7 +77,7 @@ func (tetris *Tetris) drawBorder() {
         // tm.Print(" ")
         // tm.Print("■")
         // currentBlock.x
-        if board[r][c] == 0 {
+        if tetris.board[r][c] == 0 {
           tm.Print(" ")
         } else {
           tm.Print("■")
