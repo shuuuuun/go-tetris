@@ -1,7 +1,9 @@
 package main
 
 import (
+  // "os"
   "fmt"
+  "time"
   // tm "github.com/buger/goterm"
   "github.com/nsf/termbox-go"
 )
@@ -15,8 +17,26 @@ func main() {
   }
   defer termbox.Close()
 
+  keyCh := make(chan termbox.Key)
+  timerCh := make(chan bool)
+
+  go keyEventLoop(keyCh)
+  go timerLoop(timerCh)
+
   tetris.newGame()
-  pollEvent()
+  
+  mainLoop(keyCh, timerCh)
+  // event_queue := make(chan termbox.Event)
+  // go func() {
+  //   for {
+  //     event_queue <- termbox.PollEvent()
+  //   }
+  // }()
+  // for {
+  //   fmt.Println("update ----------------------------------------------------------------------------")
+  //   update()
+  // }
+  // pollEvent()
   // tm.Clear() // Clear current screen
   // tetris := Tetris{}
   // tetris.newGame()
@@ -26,36 +46,98 @@ func main() {
   // }
 // MAINLOOP:
 //   for {
-//     fmt.Println("hoge----------------------------------------------------------------------------")
-//     switch ev := termbox.PollEvent(); ev.Type {
-//     case termbox.EventKey:
+//     // fmt.Println("hoge----------------------------------------------------------------------------")
+//     select {
+//     case key := <-keyCh:
+//     // ev := <-event_queue
+//     // switch ev.Type {
+//     // case termbox.EventKey:
 //       fmt.Println("poyo----------------------------------------------------------------------------")
-//       switch ev.Key {
-//       case termbox.KeyEsc:
+//       // switch ev.Key {
+//       switch key {
+//       case termbox.KeyEsc, termbox.KeyCtrlC:
 //         break MAINLOOP
 //       default:
-//         fmt.Println("fuga----------------------------------------------------------------------------")
-//         update()
+//         break
+//         // fmt.Println("fuga----------------------------------------------------------------------------")
+//         // update()
 //       }
-//     default:
-//       fmt.Println("piyo----------------------------------------------------------------------------")
+//     case <-timerCh:
+//       fmt.Println("update ----------------------------------------------------------------------------")
 //       update()
+//       break
+//     default:
+//       // fmt.Println("default ----------------------------------------------------------------------------")
+//       // update()
+//       break
 //     }
-//     fmt.Println("moge----------------------------------------------------------------------------")
-//     update()
+//     // fmt.Println("moge----------------------------------------------------------------------------")
+//     // update()
 //   }
 }
 
+func keyEventLoop(kch chan termbox.Key) {
+  for {
+    switch ev := termbox.PollEvent(); ev.Type {
+    case termbox.EventKey:
+      kch <- ev.Key
+    default:
+    }
+  }
+}
+
+func timerLoop(tch chan bool) {
+  _timeSpan := 100
+  for {
+    tch <- true
+    time.Sleep(time.Duration(_timeSpan) * time.Millisecond)
+  }
+}
+
+func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
+  for {
+    // fmt.Println("hoge----------------------------------------------------------------------------")
+    select {
+    case key := <-keyCh:
+    // ev := <-event_queue
+    // switch ev.Type {
+    // case termbox.EventKey:
+      fmt.Println("poyo----------------------------------------------------------------------------")
+      // switch ev.Key {
+      switch key {
+      case termbox.KeyEsc, termbox.KeyCtrlC:
+        return
+      default:
+        break
+        // fmt.Println("fuga----------------------------------------------------------------------------")
+        // update()
+      }
+    case <-timerCh:
+      fmt.Println("update ----------------------------------------------------------------------------")
+      update()
+      break
+    default:
+      // fmt.Println("default ----------------------------------------------------------------------------")
+      // update()
+      break
+    }
+    // fmt.Println("moge----------------------------------------------------------------------------")
+    // update()
+  }
+}
+
 func pollEvent() {
-  update()
+  // update()
   for {
     fmt.Println("hoge----------------------------------------------------------------------------")
     switch ev := termbox.PollEvent(); ev.Type {
     case termbox.EventKey:
-      fmt.Println("poyo----------------------------------------------------------------------------")
+      // fmt.Println("poyo----------------------------------------------------------------------------")
       switch ev.Key {
       case termbox.KeyEsc:
+        fmt.Println("poyo----------------------------------------------------------------------------")
         return
+        // os.Exit(0)
       default:
         fmt.Println("fuga----------------------------------------------------------------------------")
         update()
@@ -64,8 +146,8 @@ func pollEvent() {
       fmt.Println("piyo----------------------------------------------------------------------------")
       update()
     }
-    fmt.Println("moge----------------------------------------------------------------------------")
-    update()
+    // fmt.Println("moge----------------------------------------------------------------------------")
+    // update()
   }
 }
 
