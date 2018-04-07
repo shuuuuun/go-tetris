@@ -7,6 +7,7 @@ import (
 )
 
 var tetris = Tetris{}
+var startTime = time.Now()
 
 func main() {
   err := termbox.Init()
@@ -21,16 +22,7 @@ func main() {
   go keyEventLoop(keyCh)
   go timerLoop(timerCh)
 
-  tetris.newGame()
-
   mainLoop(keyCh, timerCh)
-
-  // tetris := Tetris{}
-  // tetris.newGame()
-  // for {
-  //   tetris.update()
-  //   tetris.render()
-  // }
 }
 
 func keyEventLoop(kch chan termbox.Key) {
@@ -52,6 +44,7 @@ func timerLoop(tch chan bool) {
 }
 
 func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
+  tetris.newGame()
   for {
     select {
     case key := <-keyCh:
@@ -62,7 +55,6 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
         break
       }
     case <-timerCh:
-      fmt.Println("update ----------------------------------------------------------------------------")
       update()
       break
     default:
@@ -72,6 +64,9 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
 }
 
 func update() {
+  // fmt.Println("Current Time:", time.Now().Format(time.RFC1123))
+  // fmt.Println("Time:", time.Now().Sub(startTime).Seconds())
+
   tetris.update()
   // tetris.render()
   draw()
@@ -79,6 +74,9 @@ func update() {
 
 func draw() {
   termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+
+  elapsedTime := time.Now().Sub(startTime).Seconds()
+  drawText(0, rows+2, fmt.Sprintln("Elapsed Time:", elapsedTime))
 
   drawBorder()
   drawBoard()
@@ -106,4 +104,13 @@ func drawBorder() {
   termbox.SetCell(cols + 1, 0, '┓', color, color)
   termbox.SetCell(0, rows + 1, '┗', color, color)
   termbox.SetCell(cols + 1, rows + 1, '┛', color, color)
+}
+
+func drawText(x, y int, str string) {
+  color := termbox.ColorDefault
+  runes := []rune(str)
+
+  for i := 0; i < len(runes); i += 1 {
+    termbox.SetCell(x+i, y, runes[i], color, color)
+  }
 }
