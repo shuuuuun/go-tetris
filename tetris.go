@@ -14,15 +14,16 @@ const hidden_rows int = number_of_block
 const logical_rows int = rows + hidden_rows
 
 type Tetris struct {
-  currentBlock Block
-  // currentBlock *Block
+  // currentBlock Block
+  currentBlock *Block
   board [][]int
 }
 
 func (tetris *Tetris) newGame() {
   tetris.initBoard()
   // currentBlock = new(Block)
-  tetris.currentBlock = Block{x: 1, y: 5}
+  // tetris.currentBlock = Block{x: 1, y: 5}
+  tetris.currentBlock = NewBlock(1)
 }
 
 func (tetris *Tetris) update() {
