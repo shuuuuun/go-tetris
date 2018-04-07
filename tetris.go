@@ -4,6 +4,7 @@ import (
   tm "github.com/buger/goterm"
   // "github.com/nsf/termbox-go"
   "time"
+  "fmt"
 )
 
 const number_of_block int = 4
@@ -28,6 +29,7 @@ func (tetris *Tetris) newGame() {
 
 func (tetris *Tetris) update() {
   tetris.currentBlock.moveDown()
+  fmt.Println("Current Time:", time.Now().Format(time.RFC1123))
 }
 
 func (tetris *Tetris) render() {

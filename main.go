@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
   // tm "github.com/buger/goterm"
   "github.com/nsf/termbox-go"
 )
@@ -23,22 +24,48 @@ func main() {
   //   tetris.update()
   //   tetris.render()
   // }
+// MAINLOOP:
+//   for {
+//     fmt.Println("hoge----------------------------------------------------------------------------")
+//     switch ev := termbox.PollEvent(); ev.Type {
+//     case termbox.EventKey:
+//       fmt.Println("poyo----------------------------------------------------------------------------")
+//       switch ev.Key {
+//       case termbox.KeyEsc:
+//         break MAINLOOP
+//       default:
+//         fmt.Println("fuga----------------------------------------------------------------------------")
+//         update()
+//       }
+//     default:
+//       fmt.Println("piyo----------------------------------------------------------------------------")
+//       update()
+//     }
+//     fmt.Println("moge----------------------------------------------------------------------------")
+//     update()
+//   }
 }
 
 func pollEvent() {
   update()
   for {
+    fmt.Println("hoge----------------------------------------------------------------------------")
     switch ev := termbox.PollEvent(); ev.Type {
     case termbox.EventKey:
+      fmt.Println("poyo----------------------------------------------------------------------------")
       switch ev.Key {
       case termbox.KeyEsc:
         return
       default:
+        fmt.Println("fuga----------------------------------------------------------------------------")
         update()
       }
     default:
+      fmt.Println("piyo----------------------------------------------------------------------------")
       update()
     }
+    fmt.Println("moge----------------------------------------------------------------------------")
+    update()
   }
 }
 
