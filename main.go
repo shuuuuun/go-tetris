@@ -77,11 +77,31 @@ func draw() {
 
   elapsedTime := time.Now().Sub(startTime).Seconds()
   drawText(0, rows+2, fmt.Sprintln("Elapsed Time:", elapsedTime))
+  drawText(0, rows+3, fmt.Sprintln("block:", tetris.currentBlock.y))
 
   drawBorder()
   drawBoard()
+  drawCurrentBlock()
 
   termbox.Flush()
+}
+
+func drawCurrentBlock() {
+  block := tetris.currentBlock
+  const color = termbox.ColorDefault
+  for y := 0; y < number_of_block; y++ {
+    for x := 0; x < number_of_block; x++ {
+      if block.shape[y][x] == 0 {
+        continue
+      }
+      drawX := x + block.x
+      drawY := y + block.y - hidden_rows
+      if drawY < 0 {
+        continue
+      }
+      termbox.SetCell(drawX + 1, drawY + 1, '■', color, color)
+    }
+  }
 }
 
 func drawBoard() {

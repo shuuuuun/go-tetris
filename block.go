@@ -58,6 +58,6 @@ func NewBlock(shapeId int) *Block {
   return block
 }
 
-func (b Block) moveDown() {
+func (b *Block) moveDown() {
   b.y += 1
 }
