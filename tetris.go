@@ -16,11 +16,17 @@ type Tetris struct {
   currentBlock *Block
   nextBlock *Block
   board [][]int
+  isPlayng bool
 }
 
 func (tetris *Tetris) newGame() {
+  tetris.isPlayng = true
   tetris.initBoard()
   tetris.createCurrentBlock()
+}
+
+func (tetris *Tetris) quitGame() {
+  tetris.isPlayng = false
 }
 
 func (tetris *Tetris) update() {
@@ -28,7 +34,7 @@ func (tetris *Tetris) update() {
     tetris.freeze()
     // tetris.clearLines()
     if tetris.checkGameOver() {
-      // tetris.quitGame()
+      tetris.quitGame()
       return
     }
     tetris.createCurrentBlock()

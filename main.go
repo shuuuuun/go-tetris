@@ -90,6 +90,7 @@ func draw() {
   elapsedTime := time.Now().Sub(startTime).Seconds()
   drawText(0, rows+2, fmt.Sprintln("Elapsed Time:", elapsedTime))
   drawText(0, rows+3, fmt.Sprintln("block id:", tetris.currentBlock.blockId))
+  drawText(0, rows+4, fmt.Sprintln("isPlayng:", tetris.isPlayng))
 
   drawBorder()
   drawBoard()
