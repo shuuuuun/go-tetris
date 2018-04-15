@@ -132,8 +132,10 @@ func (tetris *Tetris) validate(offsetX, offsetY int, block *Block) bool {
       isOutsideRightWall := boardX >= cols
       isUnderBottom := boardY >= logical_rows
       isOutsideBoard := boardY >= len(tetris.board) || boardX >= len(tetris.board[boardY])
-      isExistsBlock := !isOutsideBoard && tetris.board[boardY][boardX] != 0
-      if isOutsideLeftWall || isOutsideRightWall || isUnderBottom || isOutsideBoard || isExistsBlock {
+      if isOutsideLeftWall || isOutsideRightWall || isUnderBottom || isOutsideBoard {
+        return false
+      }
+      if tetris.board[boardY][boardX] != 0 { // isExistsBlock
         return false
       }
     }
