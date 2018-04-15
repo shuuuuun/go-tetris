@@ -70,3 +70,14 @@ func (b *Block) moveRight() {
 func (b *Block) moveDown() {
   b.y += 1
 }
+
+func (b *Block) rotate() {
+  newShape := make([][]int, number_of_block)
+  for y := 0; y < number_of_block; y++ {
+    newShape = append(newShape, make([]int, number_of_block))
+    for x := 0; x < number_of_block; x++ {
+      newShape[y] = append(newShape[y], b.shape[number_of_block - 1 - x][y])
+    }
+  }
+  b.shape = newShape
+}

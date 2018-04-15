@@ -97,6 +97,16 @@ func (tetris *Tetris) moveBlockDown() bool {
   return isValid
 }
 
+func (tetris *Tetris) rotateBlock() bool {
+  rotatedBlock := tetris.currentBlock // copy
+  rotatedBlock.rotate()
+  isValid := tetris.validate(0, 0, rotatedBlock)
+  if isValid {
+    tetris.currentBlock = rotatedBlock
+  }
+  return isValid
+}
+
 func (tetris *Tetris) validate(offsetX, offsetY int, block *Block) bool {
   // block = block || tetris.currentBlock
   nextX := block.x + offsetX

@@ -58,6 +58,9 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
       case termbox.KeyArrowDown:
         tetris.moveBlockDown()
         break
+      case termbox.KeyArrowUp:
+        tetris.rotateBlock()
+        break
       case termbox.KeyEsc, termbox.KeyCtrlC:
         return
       default:
