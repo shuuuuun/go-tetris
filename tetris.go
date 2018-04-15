@@ -23,7 +23,6 @@ func (tetris *Tetris) newGame() {
 }
 
 func (tetris *Tetris) update() {
-  // tetris.currentBlock.moveDown()
   if !tetris.moveBlockDown() {
     tetris.freeze()
     // tetris.clearLines()
@@ -71,6 +70,22 @@ func (tetris *Tetris) freeze() {
       }
     }
   }
+}
+
+func (tetris *Tetris) moveBlockLeft() bool {
+  isValid := tetris.validate(-1, 0, tetris.currentBlock)
+  if isValid {
+    tetris.currentBlock.moveLeft()
+  }
+  return isValid
+}
+
+func (tetris *Tetris) moveBlockRight() bool {
+  isValid := tetris.validate(1, 0, tetris.currentBlock)
+  if isValid {
+    tetris.currentBlock.moveRight()
+  }
+  return isValid
 }
 
 func (tetris *Tetris) moveBlockDown() bool {

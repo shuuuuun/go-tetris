@@ -49,6 +49,15 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
     select {
     case key := <-keyCh:
       switch key {
+      case termbox.KeyArrowLeft:
+        tetris.moveBlockLeft()
+        break
+      case termbox.KeyArrowRight:
+        tetris.moveBlockRight()
+        break
+      case termbox.KeyArrowDown:
+        tetris.moveBlockDown()
+        break
       case termbox.KeyEsc, termbox.KeyCtrlC:
         return
       default:

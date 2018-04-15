@@ -59,6 +59,14 @@ func NewBlock(block_id int) *Block {
   return block
 }
 
+func (b *Block) moveLeft() {
+  b.x -= 1
+}
+
+func (b *Block) moveRight() {
+  b.x += 1
+}
+
 func (b *Block) moveDown() {
   b.y += 1
 }
