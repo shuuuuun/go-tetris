@@ -27,11 +27,10 @@ func (tetris *Tetris) update() {
   if !tetris.moveBlockDown() {
     tetris.freeze()
     // tetris.clearLines()
-    // if tetris.checkGameOver() {
-    //   tetris.quitGame()
-    //   return false
-    // }
-    // tetris.frameCount += 1
+    if tetris.checkGameOver() {
+      // tetris.quitGame()
+      return
+    }
     tetris.createCurrentBlock()
     tetris.createNextBlock()
   }
@@ -134,4 +133,18 @@ func (tetris *Tetris) validate(offsetX, offsetY int, block *Block) bool {
     }
   }
   return true
+}
+
+func (tetris *Tetris) checkGameOver() bool {
+  isGameOver := true
+  for y := 0; y < number_of_block; y++ {
+    for x := 0; x < number_of_block; x++ {
+      boardY := y + tetris.currentBlock.y
+      if boardY >= hidden_rows {
+        isGameOver = false
+        break
+      }
+    }
+  }
+  return isGameOver
 }
