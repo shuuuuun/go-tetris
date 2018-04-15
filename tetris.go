@@ -143,14 +143,9 @@ func (tetris *Tetris) validate(offsetX, offsetY int, block *Block) bool {
 
 func (tetris *Tetris) checkGameOver() bool {
   isGameOver := true
-  for y := 0; y < number_of_block; y++ {
-    for x := 0; x < number_of_block; x++ {
-      boardY := y + tetris.currentBlock.y
-      if boardY >= hidden_rows {
-        isGameOver = false
-        break
-      }
-    }
+  boardY := tetris.currentBlock.y + (number_of_block - 1)
+  if boardY >= hidden_rows {
+    isGameOver = false
   }
   return isGameOver
 }
