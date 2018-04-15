@@ -47,15 +47,15 @@ var shapeList = [][][]int{
 
 type Block struct {
   shape [][]int
-  block_id int
+  blockId int
   x int
   y int
 }
 
-func NewBlock(block_id int) *Block {
+func NewBlock(blockId int) *Block {
   block := &Block{}
-  block.shape = shapeList[block_id]
-  block.block_id = block_id
+  block.shape = shapeList[blockId]
+  block.blockId = blockId
   return block
 }
 

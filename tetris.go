@@ -64,7 +64,7 @@ func (tetris *Tetris) freeze() {
         continue
       }
       if tetris.currentBlock.shape[y][x] != 0 {
-        tetris.board[boardY][boardX] = tetris.currentBlock.block_id + 1
+        tetris.board[boardY][boardX] = tetris.currentBlock.blockId + 1
       } else {
         tetris.board[boardY][boardX] = 0
       }
