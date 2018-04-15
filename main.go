@@ -70,6 +70,7 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
       update()
       break
     default:
+      draw()
       break
     }
   }
@@ -80,8 +81,6 @@ func update() {
   // fmt.Println("Time:", time.Now().Sub(startTime).Seconds())
 
   tetris.update()
-  // tetris.render()
-  draw()
 }
 
 func draw() {
