@@ -19,13 +19,40 @@ func (tetris *Tetris) newGame() {
 
 func (tetris *Tetris) update() {
   // tetris.currentBlock.moveDown()
-  tetris.moveBlockDown()
+  if !tetris.moveBlockDown() {
+    tetris.freeze()
+    // tetris.clearLines()
+    // if tetris.checkGameOver() {
+    //   tetris.quitGame()
+    //   return false
+    // }
+    // tetris.frameCount += 1
+    // tetris.createCurrentBlock()
+    // tetris.createNextBlock()
+  }
 }
 
 func (tetris *Tetris) initBoard() {
   tetris.board = make([][]int, logical_rows)
   for r := 0; r < logical_rows; r++ {
     tetris.board[r] = make([]int, cols)
+  }
+}
+
+func (tetris *Tetris) freeze() {
+  for y := 0; y < number_of_block; y++ {
+    for x := 0; x < number_of_block; x++ {
+      boardX := x + tetris.currentBlock.x
+      boardY := y + tetris.currentBlock.y
+      if tetris.currentBlock.shape[y][x] == 0 || boardY < 0 {
+        continue
+      }
+      if tetris.currentBlock.shape[y][x] != 0 {
+        tetris.board[boardY][boardX] = tetris.currentBlock.block_id + 1
+      } else {
+        tetris.board[boardY][boardX] = 0
+      }
+    }
   }
 }
 
