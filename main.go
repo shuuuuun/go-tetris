@@ -36,7 +36,7 @@ func keyEventLoop(kch chan termbox.Key) {
 }
 
 func timerLoop(tch chan bool) {
-  _timeSpan := 100
+  _timeSpan := 1000
   for {
     tch <- true
     time.Sleep(time.Duration(_timeSpan) * time.Millisecond)
