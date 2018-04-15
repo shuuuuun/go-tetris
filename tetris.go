@@ -1,6 +1,7 @@
 package main
 
 import (
+  "time"
   "math/rand"
 )
 
@@ -51,6 +52,7 @@ func (tetris *Tetris) createCurrentBlock() {
 }
 
 func (tetris *Tetris) createNextBlock() {
+  rand.Seed(time.Now().UnixNano())
   id := rand.Intn(len(shapeList) - 1)
   tetris.nextBlock = NewBlock(id)
 }
