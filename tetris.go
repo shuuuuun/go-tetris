@@ -1,5 +1,9 @@
 package main
 
+import (
+  "math/rand"
+)
+
 const number_of_block int = 4
 const cols int = 12
 const rows int = 12
@@ -9,12 +13,13 @@ const logical_rows int = rows + hidden_rows
 
 type Tetris struct {
   currentBlock *Block
+  nextBlock *Block
   board [][]int
 }
 
 func (tetris *Tetris) newGame() {
   tetris.initBoard()
-  tetris.currentBlock = NewBlock(1)
+  tetris.createCurrentBlock()
 }
 
 func (tetris *Tetris) update() {
@@ -27,8 +32,8 @@ func (tetris *Tetris) update() {
     //   return false
     // }
     // tetris.frameCount += 1
-    // tetris.createCurrentBlock()
-    // tetris.createNextBlock()
+    tetris.createCurrentBlock()
+    tetris.createNextBlock()
   }
 }
 
@@ -37,6 +42,18 @@ func (tetris *Tetris) initBoard() {
   for r := 0; r < logical_rows; r++ {
     tetris.board[r] = make([]int, cols)
   }
+}
+
+func (tetris *Tetris) createCurrentBlock() {
+  if tetris.nextBlock == nil {
+    tetris.createNextBlock()
+  }
+  tetris.currentBlock = tetris.nextBlock
+}
+
+func (tetris *Tetris) createNextBlock() {
+  id := rand.Intn(len(shapeList) - 1)
+  tetris.nextBlock = NewBlock(id)
 }
 
 func (tetris *Tetris) freeze() {

@@ -52,9 +52,10 @@ type Block struct {
   y int
 }
 
-func NewBlock(shapeId int) *Block {
+func NewBlock(block_id int) *Block {
   block := &Block{}
-  block.shape = shapeList[shapeId]
+  block.shape = shapeList[block_id]
+  block.block_id = block_id
   return block
 }
 
