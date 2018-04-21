@@ -32,7 +32,7 @@ func (tetris *Tetris) quitGame() {
 func (tetris *Tetris) update() {
   if !tetris.moveBlockDown() {
     tetris.freeze()
-    // tetris.clearLines()
+    tetris.clearLines()
     if tetris.checkGameOver() {
       tetris.quitGame()
       return
@@ -76,6 +76,32 @@ func (tetris *Tetris) freeze() {
         tetris.board[boardY][boardX] = 0
       }
     }
+  }
+}
+
+func (tetris *Tetris) clearLines() {
+  var filledRowList []int
+  for y := logical_rows - 1; y >= 0; y-- {
+    isRowFilled := !contains(tetris.board[y], 0)
+    if !isRowFilled {
+      continue
+    }
+    filledRowList = append(filledRowList, y)
+  }
+  if len(filledRowList) > 0 {
+    var newBoard [][]int
+    for range filledRowList {
+      blankRow := make([]int, cols)
+      newBoard = append(newBoard, blankRow)
+    }
+    for i, row := range tetris.board {
+      isRowFilled := contains(filledRowList, i)
+      if isRowFilled {
+        continue
+      }
+      newBoard = append(newBoard, row)
+    }
+    tetris.board = newBoard
   }
 }
 
