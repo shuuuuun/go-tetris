@@ -67,6 +67,9 @@ func mainLoop(keyCh chan termbox.Key, timerCh chan bool) {
         break
       }
     case <-timerCh:
+      if !tetris.isPlayng {
+        return
+      }
       update()
       break
     default:
