@@ -87,14 +87,17 @@ func update() {
 }
 
 func draw() {
-  termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+  // termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+  termbox.Clear(termbox.ColorWhite, termbox.ColorWhite)
 
   elapsedTime := time.Now().Sub(startTime).Seconds()
   drawText(0, rows+2, fmt.Sprintln("Elapsed Time:", elapsedTime))
   drawText(0, rows+3, fmt.Sprintln("block id:", tetris.currentBlock.blockId))
   drawText(0, rows+4, fmt.Sprintln("isPlayng:", tetris.isPlayng))
+  // drawText(0, rows+5, fmt.Sprintln("board:", len(tetris.board), len(tetris.board[0])))
+  // drawText(0, rows+7, fmt.Sprintln("board:", tetris.board))
 
-  drawBorder()
+  // drawBorder()
   drawBoard()
   drawCurrentBlock()
 
@@ -103,7 +106,8 @@ func draw() {
 
 func drawCurrentBlock() {
   block := tetris.currentBlock
-  const color = termbox.ColorDefault
+  // const color = termbox.ColorDefault
+  const color = termbox.ColorWhite
   for y := 0; y < number_of_block; y++ {
     for x := 0; x < number_of_block; x++ {
       if block.shape[y][x] == 0 {
@@ -114,21 +118,25 @@ func drawCurrentBlock() {
       if drawY < 0 {
         continue
       }
-      termbox.SetCell(drawX + 1, drawY + 1, '■', color, color)
+      // termbox.SetCell(drawX + 1, drawY + 1, '■', color, color)
+      termbox.SetCell(drawX + 1, drawY + 1, ' ', color, color)
     }
   }
 }
 
 func drawBoard() {
-  const color = termbox.ColorDefault
+  // const color = termbox.ColorDefault
+  const color = termbox.ColorWhite
   for r := 0; r < rows; r++ {
     for c := 0; c < cols; c++ {
       boardX := c
       boardY := r + hidden_rows
       if tetris.board[boardY][boardX] == 0 {
+        termbox.SetCell(c + 1, r + 1, ' ', termbox.ColorBlack, termbox.ColorBlack)
         continue
       }
-      termbox.SetCell(c + 1, r + 1, '■', color, color)
+      // termbox.SetCell(c + 1, r + 1, '■', color, color)
+      termbox.SetCell(c + 1, r + 1, ' ', color, color)
     }
   }
 }
